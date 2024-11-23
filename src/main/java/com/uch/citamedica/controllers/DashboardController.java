@@ -13,7 +13,6 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
-//        System.out.println("usuario: " + usuario);
         if (usuario == null) {
             return "redirect:/login";
         }
