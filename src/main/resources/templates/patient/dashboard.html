@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Sistema de Citas Médicas</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#"><i class="fas fa-home"></i> Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-calendar"></i> Citas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/patient/perfil}"><i class="fas fa-user"></i> Perfil</a>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center text-white">
+                    <span class="me-3">
+                        <i class="fas fa-user-circle"></i>
+                        Bienvenido, <span th:text="${session.usuarioLogueado.nombre}"></span>
+                    </span>
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn btn-light btn-sm" type="submit">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Contenido principal -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- Tarjeta de información del usuario -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-green text-white">
+                    <h5 class="card-title mb-0"><i class="fas fa-user-circle"></i> Información del Usuario</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Usuario:</strong> <span th:text="${session.usuarioLogueado.username}"></span></p>
+                    <p><strong>Rol:</strong> <span th:text="${session.usuarioLogueado.idRol.nombre}"></span></p>
+                    <p><strong>Nombre:</strong> <span th:text="${session.usuarioLogueado.nombre}"></span></p>
+                    <p><strong>Apellidos:</strong> <span th:text="${session.usuarioLogueado.apellidos}"></span></p>
+                    <p><strong>DNI:</strong> <span th:text="${session.usuarioLogueado.dni}"></span></p>
+                    <p><strong>Dirección:</strong> <span th:text="${session.usuarioLogueado.direccion}"></span></p>
+                    <p><strong>Email:</strong> <span th:text="${session.usuarioLogueado.email}"></span></p>
+                    <p><strong>Teléfono:</strong> <span th:text="${session.usuarioLogueado.telefono}"></span></p>
+                    <p><strong>Fecha nacimiento:</strong> <span th:text="${session.usuarioLogueado.fechaNacimiento}"></span></p>
+                    <p><strong>Género:</strong> <span th:text="${session.usuarioLogueado.genero == 'M' ? 'Masculino' : 'Femenino'}"></span></p>                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
