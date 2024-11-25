@@ -18,7 +18,7 @@ public class AuthController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("/login")
+    @GetMapping({"/login","/"})
     public String showLoginForm(Model model) {
         model.addAttribute("loginForm", new LoginDTO());
         return "auth/login";
