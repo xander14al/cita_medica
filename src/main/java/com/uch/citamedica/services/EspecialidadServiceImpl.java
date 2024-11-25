@@ -22,6 +22,11 @@ public class EspecialidadServiceImpl implements EspecialidadService {
     }
 
     @Override
+    public Especialidad buscarPorId(Integer id) {
+        return especialidadRepository.findById(id).orElse(null);
+    }
+
+    @Override
     public void guardarEspecialidad(Especialidad especialidad) {
         especialidadRepository.save(especialidad);
     }

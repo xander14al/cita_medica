@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Administrador</title>
+    <title>Dashboard - Especialidad</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
@@ -22,27 +22,29 @@
             <div class="card-body">
                 <table class="table table-bordered">
                     <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Acciones</th>
-                    </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="especialidad : ${especialidades}">
-                        <td th:text="${especialidad.idEspecialidad}"></td>
-                        <td th:text="${especialidad.nombre}"></td>
-                        <td th:text="${especialidad.descripcion}"></td>
-                        <td>
-                            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#nuevaEspecialidad"
-                                    th:attr="data-id=${especialidad.idEspecialidad}, data-nombre=${especialidad.nombre}, data-descripcion=${especialidad.descripcion}">
-                                <i class="fas fa-edit"></i> Editar
-                            </button>
-                            <a th:href="@{/especialidad/eliminar/{id}(id=${especialidad.idEspecialidad})}"
-                               class="btn btn-danger"> <i class="fas fa-trash-alt"></i> Eliminar </a>
-                        </td>
-                    </tr>
+                        <tr th:each="especialidad : ${especialidades}">
+                            <td th:text="${especialidad.idEspecialidad}"></td>
+                            <td th:text="${especialidad.nombre}"></td>
+                            <td th:text="${especialidad.descripcion}"></td>
+                            <td>
+                                <button class="btn btn-info"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#nuevaEspecialidad"
+                                        th:attr="data-id=${especialidad.idEspecialidad}">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <a th:href="@{/especialidad/eliminar/{id}(id=${especialidad.idEspecialidad})}"
+                                   class="btn btn-danger"> <i class="fas fa-trash-alt"></i> Eliminar </a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -53,13 +55,15 @@
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form th:action="@{/especialidad/guardar}" method="post">
+                <form id="especialidadForm" th:action="@{/especialidad/guardar}" method="post">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Especialidad</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" th:field="*{especialidad.idEspecialidad}"/>
+
+                        <input type="hidden" id="idEspecialidad" name="idEspecialidad"
+                               th:value="${especialidad?.idEspecialidad}">
 
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
@@ -83,4 +87,20 @@
     </div>
 </div>
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        setupAjaxEdit(
+            ".btn-info", // Selector de los botones
+            "/especialidad/{id}", // Endpoint con marcador de posición para el ID
+            function (data) {
+                document.getElementById("nombre").value = data.nombre;
+                document.getElementById("descripcion").value = data.descripcion;
+                document.querySelector("input[name='idEspecialidad']").value = data.idEspecialidad;
+            }
+        );
+
+    });
+</script>
+
 </html>

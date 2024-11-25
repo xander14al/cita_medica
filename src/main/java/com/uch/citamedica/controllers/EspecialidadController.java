@@ -4,10 +4,9 @@ import com.uch.citamedica.entities.Especialidad;
 import com.uch.citamedica.services.EspecialidadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/especialidad")
@@ -20,6 +19,13 @@ public class EspecialidadController {
     public String guardar(@ModelAttribute("especialidad") Especialidad especialidad) {
         especialidadService.guardarEspecialidad(especialidad);
         return "redirect:/admin/especialidad";
+    }
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Especialidad obtenerEspecialidad(@PathVariable Integer id) {
+        Especialidad especialidad = especialidadService.buscarPorId(id);
+        return Objects.requireNonNullElseGet(especialidad, Especialidad::new);
     }
 
     @GetMapping("/eliminar/{id}")
