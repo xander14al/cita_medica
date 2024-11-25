@@ -8,14 +8,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
 </head>
-<body th:replace="admin/base :: body">
+<body th:replace="~{admin/base :: body}">
 <div th:fragment="content">
     <div class="card">
         <div class="card">
             <div class="card-header bg-green text-white d-flex justify-content-between align-items-center">
                 <h5 class="card-title mb-0">Gestión de Especialidades</h5>
                 <!-- Botón para abrir el modal -->
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevaEspecialidad">Nueva Especialidad</button>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevaEspecialidad">Nueva
+                    Especialidad
+                </button>
             </div>
             <div class="card-body">
                 <table class="table table-bordered">
@@ -33,9 +35,12 @@
                         <td th:text="${especialidad.nombre}"></td>
                         <td th:text="${especialidad.descripcion}"></td>
                         <td>
-                            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#especialidadModal"
-                                    th:attr="data-id=${especialidad.idEspecialidad}, data-nombre=${especialidad.nombre}, data-descripcion=${especialidad.descripcion}">Editar</button>
-                            <a th:href="@{/especialidad/eliminar/{id}(id=${especialidad.idEspecialidad})}" class="btn btn-danger">Eliminar</a>
+                            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#nuevaEspecialidad"
+                                    th:attr="data-id=${especialidad.idEspecialidad}, data-nombre=${especialidad.nombre}, data-descripcion=${especialidad.descripcion}">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <a th:href="@{/especialidad/eliminar/{id}(id=${especialidad.idEspecialidad})}"
+                               class="btn btn-danger"> <i class="fas fa-trash-alt"></i> Eliminar </a>
                         </td>
                     </tr>
                     </tbody>
@@ -44,43 +49,38 @@
         </div>
     </div>
 
-    <!-- Modal Simple de Bootstrap -->
-    <div class="modal fade" id="nuevaEspecialidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="nuevaEspecialidad" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <form th:action="@{/especialidad/guardar}" method="post">
-                <div class="modal-content">
+            <div class="modal-content">
+                <form th:action="@{/especialidad/guardar}" method="post">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">Especialidad</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- ID -->
-                        <input type="hidden" th:field="*{especialidad.idEspecialidad}" />
+                        <input type="hidden" th:field="*{especialidad.idEspecialidad}"/>
 
-                        <!-- Nombre -->
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control" th:value="${especialidad.nombre}" required>
+                            <input type="text" id="nombre" name="nombre" class="form-control"
+                                   th:value="${especialidad.nombre}" required>
                         </div>
 
-                        <!-- Descripción -->
                         <div class="mb-3">
                             <label for="descripcion" class="form-label">Descripción</label>
-                            <textarea id="descripcion" name="descripcion" class="form-control" rows="3" th:text="${especialidad.descripcion}" required></textarea>
+                            <textarea id="descripcion" name="descripcion" class="form-control" rows="3"
+                                      th:text="${especialidad.descripcion}" required></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

@@ -8,4 +8,7 @@ public interface EspecialidadService {
 
     List<Especialidad> listarEspecialidades();
 
+    void guardarEspecialidad(Especialidad especialidad);
+
+    void eliminarEspecialidad(Integer id);
 }

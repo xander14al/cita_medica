@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -19,19 +20,58 @@ public class DashboardAdminController {
     EspecialidadService especialidadService;
 
     @GetMapping("/dashboard")
-    public String dashboard() {
+    public String showDashboard(Model model) {
+        model.addAttribute("activePage", "dashboard");
         return "admin/dashboard";
     }
 
-    @GetMapping("/dashboard2")
-    public String dashboard2() {
-        return "admin/dashboard.copy";
+    @GetMapping("/medicos")
+    public String showMedicos(Model model) {
+        model.addAttribute("activePage", "medicos");
+        return "admin/medicos";
+    }
+
+    @GetMapping("/citas")
+    public String showCitas(Model model) {
+        model.addAttribute("activePage", "citas");
+        return "admin/citas";
+    }
+
+    @GetMapping("/pacientes")
+    public String showPacientes(Model model) {
+        model.addAttribute("activePage", "pacientes");
+        return "admin/pacientes";
+    }
+
+    @GetMapping("/horarios")
+    public String showHorarios(Model model) {
+        model.addAttribute("activePage", "horarios");
+        return "admin/horarios";
     }
 
     @GetMapping("/especialidad")
     public String especialidad(Model model) {
+        model.addAttribute("activePage", "especialidad");
         model.addAttribute("especialidades", especialidadService.listarEspecialidades());
         model.addAttribute("especialidad", new Especialidad());
         return "admin/especialidad";
+    }
+
+    @GetMapping("/consultorios")
+    public String showConsultorios(Model model) {
+        model.addAttribute("activePage", "consultorios");
+        return "admin/consultorios";
+    }
+
+    @GetMapping("/clinica")
+    public String showClinica(Model model) {
+        model.addAttribute("activePage", "clinica");
+        return "admin/clinica";
+    }
+
+    @GetMapping("/pagos")
+    public String showPagos(Model model) {
+        model.addAttribute("activePage", "pagos");
+        return "admin/pagos";
     }
 }
