@@ -1,6 +1,6 @@
 <nav class="col-md-3 bg-green" th:fragment="sidebar">
     <div class="list-group">
-        <a th:href="@{/dashboard}" class="list-group-item list-group-item-action" th:classappend="${activePage == 'dashboard'} ? ' active'" data-page="dashboard">
+        <a th:href="@{/admin/dashboard}" class="list-group-item list-group-item-action" th:classappend="${activePage == 'dashboard'} ? ' active'" data-page="dashboard">
             <i class="fas fa-tachometer-alt"></i> Panel de Control
         </a>
         <a th:href="@{/admin/medicos}" class="list-group-item list-group-item-action" th:classappend="${activePage == 'medicos'} ? ' active'" data-page="medicos">
