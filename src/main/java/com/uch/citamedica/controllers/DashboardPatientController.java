@@ -31,7 +31,7 @@ public class DashboardPatientController {
     @GetMapping("/create_account")
     public String createAccount(Model model) {
         model.addAttribute("usuarioDto", new UsuarioDto());
-        return "patient/create_account";
+        return "create-account";
     }
 
     @PostMapping("/create")
