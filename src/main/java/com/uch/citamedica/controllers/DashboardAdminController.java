@@ -1,6 +1,9 @@
 package com.uch.citamedica.controllers;
 
 import com.uch.citamedica.entities.Especialidad;
+import com.uch.citamedica.services.EspecialidadService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +14,9 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping("/admin")
 public class DashboardAdminController {
+
+    @Autowired
+    EspecialidadService especialidadService;
 
     @GetMapping("/dashboard")
     public String dashboard() {
@@ -24,8 +30,8 @@ public class DashboardAdminController {
 
     @GetMapping("/especialidad")
     public String especialidad(Model model) {
+        model.addAttribute("especialidades", especialidadService.listarEspecialidades());
         model.addAttribute("especialidad", new Especialidad());
-        model.addAttribute("especialidades", new ArrayList<Especialidad>());
         return "admin/especialidad";
     }
 }

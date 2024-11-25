@@ -32,6 +32,10 @@ body {
     border: 1px solid #004d40; /* Verde petróleo oscuro */
 }
 
+.btn {
+    border-radius: 20px;
+}
+
 .btn-primary {
     border-radius: 20px;
     background-color: #00796b; /* Verde petróleo */
@@ -50,4 +54,10 @@ body {
 
 .text-muted a:hover {
     color: #004d40; /* Verde petróleo oscuro */
+}
+
+.list-group-item.active {
+    color: white;
+    background-color: #004d40;
+    border-color: #004d40;
 }

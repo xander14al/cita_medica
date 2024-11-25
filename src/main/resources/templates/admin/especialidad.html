@@ -12,35 +12,75 @@
 <div th:fragment="content">
     <div class="card">
         <div class="card">
-            <div class="card-header bg-green text-white">
+            <div class="card-header bg-green text-white d-flex justify-content-between align-items-center">
                 <h5 class="card-title mb-0">Gestión de Especialidades</h5>
+                <!-- Botón para abrir el modal -->
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevaEspecialidad">Nueva Especialidad</button>
             </div>
             <div class="card-body">
-                <form th:action="@{/especialidad/guardar}" method="post">
-                    <!-- ID -->
-                    <input type="hidden" th:field="*{especialidad.idEspecialidad}" />
-
-                    <!-- Nombre -->
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" class="form-control" th:value="${especialidad.nombre}" required>
-                    </div>
-
-                    <!-- Descripción -->
-                    <div class="mb-3">
-                        <label for="descripcion" class="form-label">Descripción</label>
-                        <textarea id="descripcion" name="descripcion" class="form-control" rows="3" th:text="${especialidad.descripcion}" required></textarea>
-                    </div>
-
-                    <!-- Botones -->
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-success me-2">Guardar</button>
-                        <a href="/especialidad/listar" class="btn btn-secondary">Cancelar</a>
-                    </div>
-                </form>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="especialidad : ${especialidades}">
+                        <td th:text="${especialidad.idEspecialidad}"></td>
+                        <td th:text="${especialidad.nombre}"></td>
+                        <td th:text="${especialidad.descripcion}"></td>
+                        <td>
+                            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#especialidadModal"
+                                    th:attr="data-id=${especialidad.idEspecialidad}, data-nombre=${especialidad.nombre}, data-descripcion=${especialidad.descripcion}">Editar</button>
+                            <a th:href="@{/especialidad/eliminar/{id}(id=${especialidad.idEspecialidad})}" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
+    <!-- Modal Simple de Bootstrap -->
+    <div class="modal fade" id="nuevaEspecialidad" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form th:action="@{/especialidad/guardar}" method="post">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Especialidad</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- ID -->
+                        <input type="hidden" th:field="*{especialidad.idEspecialidad}" />
+
+                        <!-- Nombre -->
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" th:value="${especialidad.nombre}" required>
+                        </div>
+
+                        <!-- Descripción -->
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea id="descripcion" name="descripcion" class="form-control" rows="3" th:text="${especialidad.descripcion}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </div>
+
 </body>
 </html>

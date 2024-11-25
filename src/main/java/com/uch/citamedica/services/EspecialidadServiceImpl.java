@@ -1,0 +1,23 @@
+package com.uch.citamedica.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.uch.citamedica.entities.Especialidad;
+import com.uch.citamedica.repository.EspecialidadRepository;
+
+import jakarta.persistence.Id;
+
+@Service
+public class EspecialidadServiceImpl implements EspecialidadService {
+
+    @Autowired
+    EspecialidadRepository especialidadRepository;
+
+    @Override
+    public List<Especialidad> listarEspecialidades() {
+        return especialidadRepository.findAll();
+    }
+}
