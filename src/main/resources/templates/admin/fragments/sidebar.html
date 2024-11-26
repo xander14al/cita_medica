@@ -12,6 +12,9 @@
         <a th:href="@{/admin/pacientes}" class="list-group-item list-group-item-action" th:classappend="${activePage == 'pacientes'} ? 'active'" data-page="pacientes">
             <i class="fas fa-users"></i> Gestionar Pacientes
         </a>
+        <a th:href="@{/admin/administradores}" class="list-group-item list-group-item-action" th:classappend="${activePage == 'administradores'} ? 'active'" data-page="administradores">
+            <i class="fas fa-users"></i> Gestionar Administradores
+        </a>
         <a th:href="@{/admin/horarios}" class="list-group-item list-group-item-action" th:classappend="${activePage == 'horarios'} ? 'active'" data-page="horarios">
             <i class="fas fa-clock"></i> Gestionar Horarios
         </a>

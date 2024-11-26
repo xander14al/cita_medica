@@ -3,9 +3,11 @@ package com.uch.citamedica.controllers;
 import com.uch.citamedica.dto.MedicoDto;
 import com.uch.citamedica.entities.Especialidad;
 import com.uch.citamedica.entities.Medico;
+import com.uch.citamedica.entities.Usuario;
 import com.uch.citamedica.services.EspecialidadService;
 
 import com.uch.citamedica.services.MedicoService;
+import com.uch.citamedica.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,9 @@ public class DashboardAdminController {
 
     @Autowired
     MedicoService medicoService;
+
+    @Autowired
+    UsuarioService usuarioService;
 
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
@@ -38,16 +43,26 @@ public class DashboardAdminController {
     }
 
     @GetMapping("/citas")
-    public String showCitas(Model model) {
+    public String citas(Model model) {
         model.addAttribute("activePage", "citas");
         return "admin/citas";
     }
 
     @GetMapping("/pacientes")
-    public String showPacientes(Model model) {
+    public String pacientes(Model model) {
         model.addAttribute("activePage", "pacientes");
+        model.addAttribute("pacientes", usuarioService.listarPacientes());
         return "admin/pacientes";
     }
+
+    @GetMapping("/administradores")
+    public String administradores(Model model) {
+        model.addAttribute("activePage", "administradores");
+        model.addAttribute("administrador", new Usuario());
+        model.addAttribute("administradores", usuarioService.listarAdministradores());
+        return "admin/administradores";
+    }
+
 
     @GetMapping("/horarios")
     public String showHorarios(Model model) {

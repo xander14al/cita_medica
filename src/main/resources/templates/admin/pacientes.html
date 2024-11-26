@@ -7,14 +7,46 @@
 <div th:replace="~{admin/base :: body}">
     <div th:fragment="content">
         <div class="card">
-            <div class="card-header bg-green text-white">
-                <h5 class="card-title mb-0">Bienvenido al Panel de Administración</h5>
-            </div>
-            <div class="card-body">
-                <p>Seleccione una opción del menú para comenzar a gestionar el sistema.</p>
+            <div class="card">
+                <div class="card-header bg-green text-white d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Gestión de Pacientes</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>DNI</th>
+                            <th>Dirección</th>
+                            <th>Email</th>
+                            <th>Estado</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>Genero</th>
+                            <th>Teléfono</th>
+                            <th>Nombre de Usuario</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="paciente : ${pacientes}">
+                            <td th:text="${paciente.idUsuario}"></td>
+                            <td th:text="${paciente.nombre}"></td>
+                            <td th:text="${paciente.apellidos}"></td>
+                            <td th:text="${paciente.dni}"></td>
+                            <td th:text="${paciente.direccion}"></td>
+                            <td th:text="${paciente.email}"></td>
+                            <td th:text="${paciente.estado}"></td>
+                            <td th:text="${paciente.fechaNacimiento}"></td>
+                            <td th:text="${paciente.genero}"></td>
+                            <td th:text="${paciente.telefono}"></td>
+                            <td th:text="${paciente.username}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 </div>
 </body>
 </html>

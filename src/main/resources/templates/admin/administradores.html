@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{admin/base :: head(pageTitle='Healthy - Administradores')}">
+    <title>Healthy - Administradores</title>
+</head>
+<body>
+<div th:replace="~{admin/base :: body}">
+    <div th:fragment="content">
+        <div class="card">
+            <div class="card">
+                <div class="card-header bg-green text-white d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Gestión de Administradores</h5>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoAdministrador">Nuevo
+                        administrador
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>DNI</th>
+                            <th>Dirección</th>
+                            <th>Email</th>
+                            <th>Estado</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>Genero</th>
+                            <th>Teléfono</th>
+                            <th>Nombre de Usuario</th>
+                            <th>Acciones</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="administrador : ${administradores}">
+                                <td th:text="${administrador.idUsuario}"></td>
+                                <td th:text="${administrador.nombre}"></td>
+                                <td th:text="${administrador.apellidos}"></td>
+                                <td th:text="${administrador.dni}"></td>
+                                <td th:text="${administrador.direccion}"></td>
+                                <td th:text="${administrador.email}"></td>
+                                <td th:text="${administrador.estado}"></td>
+                                <td th:text="${administrador.fechaNacimiento}"></td>
+                                <td th:text="${administrador.genero}"></td>
+                                <td th:text="${administrador.telefono}"></td>
+                                <td th:text="${administrador.username}"></td>
+                                <td>
+                                    <button class="btn btn-info"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#nuevoAdministrador"
+                                            th:attr="data-id=${administrador.idUsuario}">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </button>
+                                    <a th:href="@{/usuario/eliminar/{id}(id=${administrador.idUsuario})}"
+                                       class="btn btn-danger"> <i class="fas fa-trash-alt"></i> Eliminar </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="nuevoAdministrador" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="especialidadForm" th:action="@{/usuario/guardar}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Administrador</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <input type="hidden" id="idUsuario" name="idUsuario"
+                               th:value="${administrador?.idUsuario}">
+
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control"
+                                   th:value="${administrador.nombre}" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        setupAjaxEdit(
+            ".btn-info", // Selector de los botones
+            "/usuario/{id}", // Endpoint con marcador de posición para el ID
+            function (data) {
+                document.getElementById("nombre").value = data.nombre;
+                document.querySelector("input[name='idUsuario']").value = data.idUsuario;
+            });
+    });
+</script>
+</html>

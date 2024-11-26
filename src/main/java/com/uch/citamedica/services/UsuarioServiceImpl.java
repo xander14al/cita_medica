@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import com.uch.citamedica.entities.Usuario;
 import com.uch.citamedica.repository.UsuarioRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
@@ -60,4 +63,18 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
     }
 
+    @Override
+    public List<Usuario> listarPacientes() {
+        return usuarioRepository.findAll().stream()
+                .filter(usuario -> usuario.getIdRol().getIdRol() == 2)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<Usuario> listarAdministradores() {
+        return usuarioRepository.findAll().stream()
+                .filter(usuario -> usuario.getIdRol().getIdRol() == 1)
+                .collect(Collectors.toList());
+    }
 }
