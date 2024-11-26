@@ -4,6 +4,8 @@
  */
 package com.uch.citamedica.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,58 +20,73 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "medico")
 @NamedQueries({
-    @NamedQuery(name = "Medico.findAll", query = "SELECT m FROM Medico m"),
-    @NamedQuery(name = "Medico.findByIdMedico", query = "SELECT m FROM Medico m WHERE m.idMedico = :idMedico"),
-    @NamedQuery(name = "Medico.findByDni", query = "SELECT m FROM Medico m WHERE m.dni = :dni"),
-    @NamedQuery(name = "Medico.findByNombre", query = "SELECT m FROM Medico m WHERE m.nombre = :nombre"),
-    @NamedQuery(name = "Medico.findByApellidos", query = "SELECT m FROM Medico m WHERE m.apellidos = :apellidos"),
-    @NamedQuery(name = "Medico.findByTelefono", query = "SELECT m FROM Medico m WHERE m.telefono = :telefono"),
-    @NamedQuery(name = "Medico.findByEmail", query = "SELECT m FROM Medico m WHERE m.email = :email"),
-    @NamedQuery(name = "Medico.findByApellido", query = "SELECT m FROM Medico m WHERE m.apellido = :apellido"),
-    @NamedQuery(name = "Medico.findByNumeroColegiatura", query = "SELECT m FROM Medico m WHERE m.numeroColegiatura = :numeroColegiatura")})
+        @NamedQuery(name = "Medico.findAll", query = "SELECT m FROM Medico m"),
+        @NamedQuery(name = "Medico.findByIdMedico", query = "SELECT m FROM Medico m WHERE m.idMedico = :idMedico"),
+        @NamedQuery(name = "Medico.findByDni", query = "SELECT m FROM Medico m WHERE m.dni = :dni"),
+        @NamedQuery(name = "Medico.findByNombre", query = "SELECT m FROM Medico m WHERE m.nombre = :nombre"),
+        @NamedQuery(name = "Medico.findByApellidos", query = "SELECT m FROM Medico m WHERE m.apellidos = :apellidos"),
+        @NamedQuery(name = "Medico.findByTelefono", query = "SELECT m FROM Medico m WHERE m.telefono = :telefono"),
+        @NamedQuery(name = "Medico.findByEmail", query = "SELECT m FROM Medico m WHERE m.email = :email"),
+        @NamedQuery(name = "Medico.findByNumeroColegiatura", query = "SELECT m FROM Medico m WHERE m.numeroColegiatura = :numeroColegiatura")})
 public class Medico implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_medico")
     private Integer idMedico;
+
     @Basic(optional = false)
     @Column(name = "dni")
     private String dni;
+
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
+
     @Basic(optional = false)
     @Column(name = "apellidos")
     private String apellidos;
+
     @Column(name = "telefono")
     private String telefono;
+
     @Column(name = "email")
     private String email;
-    @Basic(optional = false)
-    @Column(name = "apellido")
-    private String apellido;
+
     @Basic(optional = false)
     @Column(name = "numero_colegiatura")
     private String numeroColegiatura;
+
+    @JsonIgnore
+    @JsonBackReference
     @ManyToMany(mappedBy = "medicoList", fetch = FetchType.LAZY)
     private List<Especialidad> especialidadList;
+
+    @JsonIgnore
+    @JsonBackReference
     @OneToMany(mappedBy = "idMedico", fetch = FetchType.LAZY)
     private List<Horario> horarioList;
+
     @JoinColumn(name = "id_clinica", referencedColumnName = "id_clinica")
     @ManyToOne(fetch = FetchType.LAZY)
     private Clinica idClinica;
+
     @JoinColumn(name = "id_especialidad", referencedColumnName = "id_especialidad")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Especialidad idEspecialidad;
+
+    @JsonIgnore
+    @JsonBackReference
     @OneToMany(mappedBy = "idMedico", fetch = FetchType.LAZY)
     private List<Cita> citaList;
 
@@ -80,12 +97,11 @@ public class Medico implements Serializable {
         this.idMedico = idMedico;
     }
 
-    public Medico(Integer idMedico, String dni, String nombre, String apellidos, String apellido, String numeroColegiatura) {
+    public Medico(Integer idMedico, String dni, String nombre, String apellidos, String numeroColegiatura) {
         this.idMedico = idMedico;
         this.dni = dni;
         this.nombre = nombre;
         this.apellidos = apellidos;
-        this.apellido = apellido;
         this.numeroColegiatura = numeroColegiatura;
     }
 
@@ -135,14 +151,6 @@ public class Medico implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     public String getNumeroColegiatura() {
@@ -215,7 +223,19 @@ public class Medico implements Serializable {
 
     @Override
     public String toString() {
-        return "com.uch.citamedica.entities.Medico[ idMedico=" + idMedico + " ]";
+        return "Medico{" +
+                "idMedico=" + idMedico +
+                ", dni='" + dni + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", email='" + email + '\'' +
+                ", numeroColegiatura='" + numeroColegiatura + '\'' +
+                ", especialidadList=" + especialidadList +
+                ", horarioList=" + horarioList +
+                ", idClinica=" + idClinica +
+                ", idEspecialidad=" + idEspecialidad +
+                ", citaList=" + citaList +
+                '}';
     }
-    
 }

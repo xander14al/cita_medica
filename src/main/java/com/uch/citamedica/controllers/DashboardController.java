@@ -13,9 +13,6 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
-        if (usuario == null) {
-            return "redirect:/login";
-        }
 
         if (usuario.getIdRol().getIdRol() == 1) {
             return "redirect:/admin/dashboard";

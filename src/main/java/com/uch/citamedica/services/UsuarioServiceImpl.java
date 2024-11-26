@@ -36,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         System.out.println("usuarioDto password: "+usuarioDto.getPassword());
         System.out.println("usuarioDto passwordTemp: "+usuarioDto.getPasswordTemp());
         if (usuarioDto.getPassword().equals(usuarioDto.getPasswordTemp())) {
-            Usuario usuario = objectMapper.UsuarioDtoToUsuario(usuarioDto);
+            Usuario usuario = objectMapper.usuarioDtoToUsuario(usuarioDto);
             usuarioRepository.save(usuario);
         }
     }

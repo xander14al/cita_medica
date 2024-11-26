@@ -31,12 +31,11 @@ public class DashboardPatientController {
     @GetMapping("/create_account")
     public String createAccount(Model model) {
         model.addAttribute("usuarioDto", new UsuarioDto());
-        return "create-account";
+        return "patient/create-account";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute("usuarioDto") UsuarioDto usuarioDto) {
-
         System.out.println("usuarioDto password: "+usuarioDto.getPassword());
         System.out.println("usuarioDto passwordTemp: "+usuarioDto.getPasswordTemp());
         usuarioService.registrarPaciente(usuarioDto);

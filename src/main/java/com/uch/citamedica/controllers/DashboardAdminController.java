@@ -1,8 +1,11 @@
 package com.uch.citamedica.controllers;
 
+import com.uch.citamedica.dto.MedicoDto;
 import com.uch.citamedica.entities.Especialidad;
+import com.uch.citamedica.entities.Medico;
 import com.uch.citamedica.services.EspecialidadService;
 
+import com.uch.citamedica.services.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +19,9 @@ public class DashboardAdminController {
     @Autowired
     EspecialidadService especialidadService;
 
+    @Autowired
+    MedicoService medicoService;
+
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
         model.addAttribute("activePage", "dashboard");
@@ -25,6 +31,9 @@ public class DashboardAdminController {
     @GetMapping("/medicos")
     public String showMedicos(Model model) {
         model.addAttribute("activePage", "medicos");
+        model.addAttribute("medicos", medicoService.listarMedicos());
+        model.addAttribute("especialidades", especialidadService.listarEspecialidades());
+        model.addAttribute("medico", new MedicoDto());
         return "admin/medicos";
     }
 
