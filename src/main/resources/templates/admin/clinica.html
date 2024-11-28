@@ -9,12 +9,92 @@
         <div class="card">
             <div class="card-header bg-green text-white">
                 <h5 class="card-title mb-0">Bienvenido al Panel de Administración</h5>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoClinica">Nuevo
+                    Clinica
+                </button>
             </div>
             <div class="card-body">
                 <p>Seleccione una opción del menú para comenzar a gestionar el sistema.</p>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="clinica : ${clinicas}">
+                        <td th:text="${clinica.idClinica}"></td>
+                        <td th:text="${clinica.nombre}"></td>
+                        <td th:text="${clinica.direccion}"></td>
+                        <td th:text="${clinica.telefono}"></td>
+                        <td th:text="${clinica.email}"></td>
+                        <td>
+                            <button class="btn btn-info"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#nuevoClinica"
+                                    th:attr="data-id=${clinica.idClinica}">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <a th:href="@{/clinica/eliminar/{id}(id=${clinica.idClinica})}"
+                               class="btn btn-danger"> <i class="fas fa-trash-alt"></i> Eliminar </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="nuevoClinica" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+       <div class="modal-content">
+           <form id="clinicaForm" th:action="@{/clinica/guardar}" method="post">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="exampleModalLongTitle">Clinica</h5>
+                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+
+                   <input type="hidden" id="idClinica" name="idClinica"
+                          th:value="${clinica?.idClinica}">
+
+                   <div class="mb-3">
+                       <label for="nombre" class="form-label">Nombre</label>
+                       <input type="text" id="nombre" name="nombre" class="form-control"
+                              th:value="${clinica.nombre}" required>
+                   </div>
+
+                   <div class="mb-3">
+                       <label for="direccion" class="form-label">Dirección</label>
+                       <input type="value" id="direccion" name="direccion" class="form-control"
+                                 th:value="${clinica.direccion}" required>
+                   </div>
+
+                   <div class="mb-3">
+                       <label for="telefono" class="form-label">Teléfono</label>
+                       <input type="text" id="telefono" name="telefono" class="form-control"
+                                 th:value="${clinica.telefono}" required>
+                   </div>
+
+                   <div class="mb-3">
+                       <label for="email" class="form-label">Email</label>
+                       <input type="text" id="email" name="email" class="form-control"
+                              th:value="${clinica.email}" required>
+                   </div>
+               </div>
+               <div class="modal-footer">
+                   <button type="submit" class="btn btn-success">Guardar</button>
+                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+               </div>
+           </form>
+       </div>
+   </div>
+</div>
 </div>
 </body>
 </html>
