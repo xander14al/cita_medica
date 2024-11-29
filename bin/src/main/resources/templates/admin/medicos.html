@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{admin/base :: head(pageTitle='Healthy - Medicos')}">
+    <title>Healthy - Medicos</title>
+</head>
+<body th:replace="~{admin/base :: body}">
+<div th:fragment="content">
+    <div class="card">
+        <div class="card">
+            <div class="card-header bg-green text-white d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">Gestión de Médicos</h5>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoMedico">Nuevo
+                    Médico
+                </button>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>DNI</th>
+                        <th>Email</th>
+                        <th>N° Colegio</th>
+                        <th>Teléfono</th>
+                        <th>Especialidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="medico : ${medicos}">
+                        <td th:text="${medico.idMedico}"></td>
+                        <td th:text="${medico.nombre}"></td>
+                        <td th:text="${medico.apellidos}"></td>
+                        <td th:text="${medico.dni}"></td>
+                        <td th:text="${medico.email}"></td>
+                        <td th:text="${medico.numeroColegio}"></td>
+                        <td th:text="${medico.telefono}"></td>
+                        <td th:text="${medico.especialidad}"></td>
+                        <td>
+                            <button class="btn btn-info"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#nuevoMedico"
+                                    th:attr="data-id=${medico.idMedico}">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <a th:href="@{/medico/eliminar/{id}(id=${medico.idMedico})}"
+                               class="btn btn-danger"> <i class="fas fa-trash-alt"></i> Eliminar </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="nuevoMedico" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="medicoForm" th:action="@{/medico/guardar}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Especialidad</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <input type="hidden" id="idMedico" name="idMedico"
+                               th:value="${medico?.idMedico}">
+
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control"
+                                   th:value="${medico.nombre}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="apellidos" class="form-label">Apellidos</label>
+                            <input type="value" id="apellidos" name="apellidos" class="form-control"
+                                      th:value="${medico.apellidos}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="dni" class="form-label">DNI</label>
+                            <input type="text" id="dni" name="dni" class="form-control"
+                                      th:value="${medico.dni}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" id="email" name="email" class="form-control"
+                                   th:value="${medico.email}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="numeroColegio" class="form-label">Número Colegio</label>
+                            <input type="text" id="numeroColegio" name="numeroColegio" class="form-control"
+                                   th:value="${medico.numeroColegio}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="text" id="telefono" name="telefono" class="form-control"
+                                   th:value="${medico.telefono}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="idEspecialidad" class="form-label">Especialidad</label>
+                            <select id="idEspecialidad" name="idEspecialidad" class="form-control" required>
+                                <option value="" disabled>Selecciona una especialidad</option>
+                                <option th:each="especialidad : ${especialidades}"
+                                        th:value="${especialidad.idEspecialidad}"
+                                        th:text="${especialidad.nombre}"
+                                        th:selected="${especialidad.idEspecialidad == medico.idEspecialidad}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        setupAjaxEdit(
+            ".btn-info",
+            "/medico/{id}",
+            function (data) {
+                document.getElementById("idMedico").value = data.idMedico;
+                document.getElementById("nombre").value = data.nombre;
+                document.getElementById("apellidos").value = data.apellidos;
+                document.getElementById("dni").value = data.dni;
+                document.getElementById("email").value = data.email;
+                document.getElementById("numeroColegio").value = data.numeroColegio;
+                document.getElementById("telefono").value = data.telefono;
+                document.getElementById("idEspecialidad").value = data.idEspecialidad;
+                document.querySelector("input[name='idMedico']").value = data.idMedico;
+            });
+    });
+</script>
+
+</html>

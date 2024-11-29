@@ -1,0 +1,63 @@
+/* style.css */
+
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar-primary {
+    background-color: #00796b; /* Verde petróleo */
+}
+
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #004d40; /* Verde petróleo oscuro */
+    border-bottom: none;
+}
+
+.card-title {
+    color: #ffffff;
+}
+
+.form-control {
+    border-radius: 20px;
+    border: 1px solid #004d40; /* Verde petróleo oscuro */
+}
+
+.btn {
+    border-radius: 25px;
+}
+
+.btn-primary {
+    border-radius: 20px;
+    background-color: #00796b; /* Verde petróleo */
+    border-color: #00796b;
+}
+
+.btn-primary:hover {
+    background-color: #004d40; /* Verde petróleo oscuro */
+    border-color: #004d40;
+}
+
+.text-muted a {
+    color: #00796b; /* Verde petróleo */
+    text-decoration: none;
+}
+
+.text-muted a:hover {
+    color: #004d40; /* Verde petróleo oscuro */
+}
+
+.list-group-item.active {
+    color: white;
+    background-color: #004d40;
+    border-color: #004d40;
+}

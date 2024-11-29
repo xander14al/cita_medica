@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{admin/base :: head(pageTitle='Healthy - Especialidad')}">
+    <title>Healthy - Especialidad</title>
+</head>
+<body th:replace="~{admin/base :: body}">
+<div th:fragment="content">
+    <div class="card">
+        <div class="card">
+            <div class="card-header bg-green text-white d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">Gestión de Especialidades</h5>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevaEspecialidad">Nueva
+                    Especialidad
+                </button>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="especialidad : ${especialidades}">
+                            <td th:text="${especialidad.idEspecialidad}"></td>
+                            <td th:text="${especialidad.nombre}"></td>
+                            <td th:text="${especialidad.descripcion}"></td>
+                            <td>
+                                <button class="btn btn-info"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#nuevaEspecialidad"
+                                        th:attr="data-id=${especialidad.idEspecialidad}">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <a th:href="@{/especialidad/eliminar/{id}(id=${especialidad.idEspecialidad})}"
+                                   class="btn btn-danger"> <i class="fas fa-trash-alt"></i> Eliminar </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="nuevaEspecialidad" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="especialidadForm" th:action="@{/especialidad/guardar}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Especialidad</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <input type="hidden" id="idEspecialidad" name="idEspecialidad"
+                               th:value="${especialidad?.idEspecialidad}">
+
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control"
+                                   th:value="${especialidad.nombre}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea id="descripcion" name="descripcion" class="form-control" rows="3"
+                                      th:text="${especialidad.descripcion}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        setupAjaxEdit(
+            ".btn-info",
+            "/especialidad/{id}",
+            function (data) {
+                document.getElementById("nombre").value = data.nombre;
+                document.getElementById("descripcion").value = data.descripcion;
+                document.querySelector("input[name='idEspecialidad']").value = data.idEspecialidad;
+            }
+        );
+
+    });
+</script>
+
+</html>

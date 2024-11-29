@@ -11,6 +11,7 @@
                 <h5 class="card-title mb-0">Bienvenido al Panel de Administración</h5>
             </div>
             <div class="card-body">
+                <p>Seleccione una opción del menú para comenzar a gestionar el sistema.</p>
                 <table class="table table-bordered">
                     <thead>
                     <tr>
@@ -21,19 +22,19 @@
                         <th>Consultorio</th>
                         <th>Fecha</th>
                         <th>Hora</th>
-                        
+                        <th>Especialidad</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="cita : ${citas}">
                         <td th:text="${cita.idCita}"></td>
-                        <td th:text="${cita.usuario.nombre}"></td>
-                        <td th:text="${cita.horario.diaSemana}"></td>
+                        <td th:text="${cita.paciente.nombre}"></td>
+                        <td th:text="${cita.horario.dia}"></td>
                         <td th:text="${cita.medico.nombre}"></td>
                         <td th:text="${cita.consultorio.nombre}"></td>
                         <td th:text="${cita.fecha}"></td>
                         <td th:text="${cita.hora}"></td>
-
+                        <td th:text="${cita.especialidad.nombre}"></td>
                     </tr>
                     </tbody>
                 </table>

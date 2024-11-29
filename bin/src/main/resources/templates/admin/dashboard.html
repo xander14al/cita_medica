@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{admin/base :: head(pageTitle='Healthy - Administrador')}">
+    <title>Healthy - Administrador</title>
+</head>
+<body>
+<div th:replace="~{admin/base :: body}">
+    <div th:fragment="content">
+        <!-- Modificar esta parte -->
+        <div class="card">
+            <div class="card-header bg-green text-white">
+                <h5 class="card-title mb-0">Bienvenido al Panel de Administración</h5>
+            </div>
+            <div class="card-body">
+                <p>Seleccione una opción del menú para comenzar a gestionar el sistema.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

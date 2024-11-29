@@ -25,6 +25,9 @@ public class DashboardAdminController {
     UsuarioService usuarioService;
 
     @Autowired
+    CitaService citaService;
+
+    @Autowired
     private ConsultorioService consultorioService;
     @Autowired
     private HorarioService horarioService;
@@ -51,6 +54,11 @@ public class DashboardAdminController {
     @GetMapping("/citas")
     public String citas(Model model) {
         model.addAttribute("activePage", "citas");
+        model.addAttribute("citas", citaService.listarCitas());
+        model.addAttribute("pacientes", usuarioService.listarPacientes());
+        model.addAttribute("horarios", horarioService.listarHorarios());
+        model.addAttribute("medicos", medicoService.listarMedicos());
+        model.addAttribute("consultorios", consultorioService.listarConsultorios());
         return "admin/citas";
     }
 

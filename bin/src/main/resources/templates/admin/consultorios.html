@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{admin/base :: head(pageTitle='Healthy - Consultorios')}">
+    <title>Healthy - Consultorios</title>
+</head>
+<body th:replace="~{admin/base :: body}">
+<div th:fragment="content">
+    <div class="card">
+        <div class="card">
+            <div class="card-header bg-green text-white d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">Gestión de consultorios</h5>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoConsultorio">Nuevo
+                    Consultorio
+                </button>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Clínica</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="consultorio : ${consultorios}">
+                        <td th:text="${consultorio.idConsultorio}"></td>
+                        <td th:text="${consultorio.nombre}"></td>
+                        <td th:text="${consultorio.direccion}"></td>
+                        <td th:text="${consultorio.telefono}"></td>
+                        <td th:text="${consultorio.clinica.nombre}"></td>
+                        <td>
+                            <button class="btn btn-info"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#nuevoConsultorio"
+                                    th:attr="data-id=${consultorio.idConsultorio}">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <a th:href="@{/consultorio/eliminar/{id}(id=${consultorio.idConsultorio})}"
+                               class="btn btn-danger"> <i class="fas fa-trash-alt"></i> Eliminar </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="nuevoConsultorio" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="consultorioForm" th:action="@{/consultorio/guardar}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Consultorio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <input type="hidden" id="idConsultorio" name="idConsultorio"
+                               th:value="${consultorio?.idConsultorio}">
+
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control"
+                                   th:value="${consultorio.nombre}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección</label>
+                            <input type="value" id="direccion" name="direccion" class="form-control"
+                                   th:value="${consultorio.direccion}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="text" id="telefono" name="telefono" class="form-control"
+                                   th:value="${consultorio.telefono}" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        setupAjaxEdit(
+            ".btn-info",
+            "/consultorio/{id}",
+            function (data) {
+                document.getElementById("idConsultorio").value = data.idConsultorio;
+                document.getElementById("nombre").value = data.nombre;
+                document.getElementById("direccion").value = data.direccion;
+                document.getElementById("telefono").value = data.telefono;
+            }
+        );
+
+    });
+</script>
+</html>

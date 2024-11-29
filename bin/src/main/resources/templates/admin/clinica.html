@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="~{admin/base :: head(pageTitle='Healthy - Clinicas')}">
+    <title>Healthy - Clinicas</title>
+</head>
+<body>
+<div th:replace="~{admin/base :: body}">
+    <div th:fragment="content">
+        <div class="card">
+            <div class="card-header bg-green text-white">
+                <h5 class="card-title mb-0">Gestión de Clinica</h5>
+            </div>
+            <div class="card-body">
+                <form id="clinicaForm" th:action="@{/clinica/guardar}" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" id="idClinica" name="idClinica"
+                               th:value="${clinica?.idClinica}">
+
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control"
+                                   th:value="${clinica.nombre}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección</label>
+                            <input type="value" id="direccion" name="direccion" class="form-control"
+                                   th:value="${clinica.direccion}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="telefono" class="form-label">Teléfono</label>
+                            <input type="text" id="telefono" name="telefono" class="form-control"
+                                   th:value="${clinica.telefono}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" id="email" name="email" class="form-control"
+                                   th:value="${clinica.email}" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
