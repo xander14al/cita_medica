@@ -36,7 +36,7 @@ public class MedicoServiceImpl implements MedicoService {
         System.out.println(medicoDto.toString());
         Medico medico = objectMapper.medicoDtoToMedico(medicoDto);
         // Clínica por defecto 1
-        medico.setIdClinica(clinicaRepository.findById(1).orElse(null));
+        medico.setClinica(clinicaRepository.findById(1).orElse(null));
         medicoRepository.save(medico);
     }
 

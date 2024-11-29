@@ -35,7 +35,7 @@
                         <td th:text="${medico.apellidos}"></td>
                         <td th:text="${medico.dni}"></td>
                         <td th:text="${medico.email}"></td>
-                        <td th:text="${medico.numeroColegiatura}"></td>
+                        <td th:text="${medico.numeroColegio}"></td>
                         <td th:text="${medico.telefono}"></td>
                         <td th:text="${medico.especialidad}"></td>
                         <td>
@@ -94,9 +94,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="numeroColegiatura" class="form-label">Número Colegiatura</label>
-                            <input type="text" id="numeroColegiatura" name="numeroColegiatura" class="form-control"
-                                   th:value="${medico.numeroColegiatura}" required>
+                            <label for="numeroColegio" class="form-label">Número Colegio</label>
+                            <input type="text" id="numeroColegio" name="numeroColegio" class="form-control"
+                                   th:value="${medico.numeroColegio}" required>
                         </div>
 
                         <div class="mb-3">
@@ -108,11 +108,11 @@
                         <div class="mb-3">
                             <label for="idEspecialidad" class="form-label">Especialidad</label>
                             <select id="idEspecialidad" name="idEspecialidad" class="form-control" required>
-                                <option value="" disabled selected>Selecciona una especialidad</option>
+                                <option value="" disabled>Selecciona una especialidad</option>
                                 <option th:each="especialidad : ${especialidades}"
                                         th:value="${especialidad.idEspecialidad}"
                                         th:text="${especialidad.nombre}"
-                                        th:selected="${especialidad.idEspecialidad == medico.idEspecialidad?.idEspecialidad}">
+                                        th:selected="${especialidad.idEspecialidad == medico.idEspecialidad}">
                                 </option>
                             </select>
                         </div>
@@ -134,13 +134,14 @@
             ".btn-info",
             "/medico/{id}",
             function (data) {
+                document.getElementById("idMedico").value = data.idMedico;
                 document.getElementById("nombre").value = data.nombre;
                 document.getElementById("apellidos").value = data.apellidos;
                 document.getElementById("dni").value = data.dni;
                 document.getElementById("email").value = data.email;
-                document.getElementById("numeroColegiatura").value = data.numeroColegiatura;
+                document.getElementById("numeroColegio").value = data.numeroColegio;
                 document.getElementById("telefono").value = data.telefono;
-                document.getElementById("especialidad").value = data.especialidad;
+                document.getElementById("idEspecialidad").value = data.idEspecialidad;
                 document.querySelector("input[name='idMedico']").value = data.idMedico;
             });
     });

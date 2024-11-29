@@ -15,11 +15,6 @@ public class ClinicaServiceImpl implements ClinicaService {
     ClinicaRepository clinicaRepository;
 
     @Override
-    public List<Clinica> listarClinicas() {
-        return clinicaRepository.findAll();
-    }
-
-    @Override
     public Clinica buscarPorId(Integer id) {
         return clinicaRepository.findById(id).orElse(null);
     }
@@ -29,8 +24,4 @@ public class ClinicaServiceImpl implements ClinicaService {
         clinicaRepository.save(clinica);
     }
 
-    @Override
-    public void eliminarClinica(Integer id) {
-        clinicaRepository.deleteById(id);
-    }
 }

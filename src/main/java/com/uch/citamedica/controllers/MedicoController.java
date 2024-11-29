@@ -23,7 +23,7 @@ public class MedicoController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    public MedicoDto obtenerMedico(@PathVariable Integer id) {
+    public MedicoDto obtenerMedico(@PathVariable("id") Integer id) {
         MedicoDto medico = medicoService.buscarPorId(id);
         return Objects.requireNonNullElseGet(medico, MedicoDto::new);
     }

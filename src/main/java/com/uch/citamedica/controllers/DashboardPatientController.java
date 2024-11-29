@@ -52,7 +52,7 @@ public class DashboardPatientController {
 
     @PostMapping("/actualizar")
     public String actualizar(HttpSession session, @ModelAttribute("usuario") Usuario usuario) {
-        usuario.setIdRol(rolService.findById(2));
+        usuario.setRol(rolService.findById(2));
         usuarioService.actualizarPaciente(usuario);
         System.out.println(usuario.getFechaNacimiento());
         session.setAttribute("usuarioLogueado", usuario);

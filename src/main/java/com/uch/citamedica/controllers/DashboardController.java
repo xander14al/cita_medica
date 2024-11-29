@@ -14,9 +14,9 @@ public class DashboardController {
     public String dashboard(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
 
-        if (usuario.getIdRol().getIdRol() == 1) {
+        if (usuario.getRol().getIdRol() == 1) {
             return "redirect:/admin/dashboard";
-        } else if (usuario.getIdRol().getIdRol() == 2) {
+        } else if (usuario.getRol().getIdRol() == 2) {
             return "redirect:/patient/dashboard";
         }
 

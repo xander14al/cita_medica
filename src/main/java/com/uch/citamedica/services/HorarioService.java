@@ -14,4 +14,5 @@ public interface HorarioService {
 
     void eliminarHorario(Integer id);
 
+    List<String> horasPermitidas();
 }

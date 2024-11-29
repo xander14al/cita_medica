@@ -2,6 +2,7 @@ package com.uch.citamedica.services;
 
 import java.util.List;
 
+import com.uch.citamedica.repository.ClinicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,10 @@ public class ConsultorioServiceImpl implements ConsultorioService {
 
     @Autowired
     ConsultorioRepository consultorioRepository;
+
+    @Autowired
+    ClinicaRepository clinicaRepository;
+
 
     @Override
     public List<Consultorio> listarConsultorios() {
@@ -26,6 +31,7 @@ public class ConsultorioServiceImpl implements ConsultorioService {
 
     @Override
     public void guardarConsultorio(Consultorio consultorio) {
+        consultorio.setClinica(clinicaRepository.findById(1).orElse(null));
         consultorioRepository.save(consultorio);
     }
 

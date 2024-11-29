@@ -17,7 +17,7 @@ function setupAjaxEdit(buttonSelector, endpoint, handleResponse) {
                 const response = await fetch(url);
 
                 if (!response.ok) {
-                    throw new Error("Error al consultar los datos del backend");
+                    throw new Error(`Error al consultar los datos del backend: ${response.status}`);
                 }
 
                 const data = await response.json();

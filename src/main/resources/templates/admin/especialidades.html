@@ -85,8 +85,8 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         setupAjaxEdit(
-            ".btn-info", // Selector de los botones
-            "/especialidad/{id}", // Endpoint con marcador de posición para el ID
+            ".btn-info",
+            "/especialidad/{id}",
             function (data) {
                 document.getElementById("nombre").value = data.nombre;
                 document.getElementById("descripcion").value = data.descripcion;

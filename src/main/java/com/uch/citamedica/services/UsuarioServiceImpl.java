@@ -35,7 +35,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void registrarPaciente(UsuarioDto usuarioDto) {
-        usuarioDto.setIdRol(rolRepository.findById(2).orElse(null));
+        usuarioDto.setRol(rolRepository.findById(2).orElse(null));
         System.out.println("usuarioDto password: "+usuarioDto.getPassword());
         System.out.println("usuarioDto passwordTemp: "+usuarioDto.getPasswordTemp());
         if (usuarioDto.getPassword().equals(usuarioDto.getPasswordTemp())) {
@@ -66,7 +66,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public List<Usuario> listarPacientes() {
         return usuarioRepository.findAll().stream()
-                .filter(usuario -> usuario.getIdRol().getIdRol() == 2)
+                .filter(usuario -> usuario.getRol().getIdRol() == 2)
                 .collect(Collectors.toList());
     }
 
@@ -74,7 +74,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public List<Usuario> listarAdministradores() {
         return usuarioRepository.findAll().stream()
-                .filter(usuario -> usuario.getIdRol().getIdRol() == 1)
+                .filter(usuario -> usuario.getRol().getIdRol() == 1)
                 .collect(Collectors.toList());
     }
 }

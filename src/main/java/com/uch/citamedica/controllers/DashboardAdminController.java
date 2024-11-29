@@ -1,13 +1,10 @@
 package com.uch.citamedica.controllers;
 
 import com.uch.citamedica.dto.MedicoDto;
-import com.uch.citamedica.entities.Especialidad;
-import com.uch.citamedica.entities.Medico;
-import com.uch.citamedica.entities.Usuario;
-import com.uch.citamedica.services.EspecialidadService;
+import com.uch.citamedica.entities.*;
+import com.uch.citamedica.services.*;
 
-import com.uch.citamedica.services.MedicoService;
-import com.uch.citamedica.services.UsuarioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +23,11 @@ public class DashboardAdminController {
 
     @Autowired
     UsuarioService usuarioService;
+
+    @Autowired
+    private ConsultorioService consultorioService;
+    @Autowired
+    private HorarioService horarioService;
 
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
@@ -67,11 +69,17 @@ public class DashboardAdminController {
     @GetMapping("/horarios")
     public String showHorarios(Model model) {
         model.addAttribute("activePage", "horarios");
+        model.addAttribute("horarios", horarioService.listarHorarios());
+        model.addAttribute("medicos", medicoService.listarMedicos());
+        model.addAttribute("consultorios", consultorioService.listarConsultorios());
+        model.addAttribute("diaSemana", DiaSemana.values());
+        model.addAttribute("horasPermitidas", horarioService.horasPermitidas());
+        model.addAttribute("horario", new Horario());
         return "admin/horarios";
     }
 
     @GetMapping("/especialidad")
-    public String especialidad(Model model) {
+    public String especialidad(Model model, HttpSession session) {
         model.addAttribute("activePage", "especialidad");
         model.addAttribute("especialidades", especialidadService.listarEspecialidades());
         model.addAttribute("especialidad", new Especialidad());
@@ -81,13 +89,15 @@ public class DashboardAdminController {
     @GetMapping("/consultorios")
     public String showConsultorios(Model model) {
         model.addAttribute("activePage", "consultorios");
+        model.addAttribute("consultorios", consultorioService.listarConsultorios());
+        model.addAttribute("consultorio", new Consultorio());
         return "admin/consultorios";
     }
 
     @GetMapping("/clinica")
     public String showClinica(Model model) {
         model.addAttribute("activePage", "clinica");
-        return "admin/clinica";
+        return "redirect:/clinica";
     }
 
     @GetMapping("/pagos")
