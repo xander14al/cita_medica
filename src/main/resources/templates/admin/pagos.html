@@ -2,107 +2,131 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head th:replace="~{admin/base :: head(pageTitle='Healthy - Pagos')}">
     <title>Healthy - Pagos</title>
+    <!-- Asegúrate de incluir Bootstrap CSS en tu proyecto -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<div th:replace="~{admin/base :: body}">
-    <div th:fragment="content">
-        <div class="card">
-            <div class="card-header bg-green text-white">
-                <h5 class="card-title mb-0">Bienvenido al Panel de Administración</h5>
+<body th:replace="~{admin/base :: body}">
+<div th:fragment="content">
+    <div class="container">
+        <div class="row">
+            <!-- Primera tabla -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-green text-white d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Gestión de tipos de moneda</h5>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevaMoneda">Nuevo tipo
+                            de moneda
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Código</th>
+                                <th>Descripción</th>
+                                <th>Símbolo</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="moneda : ${monedas}">
+                                <td th:text="${moneda.idMoneda}"></td>
+                                <td th:text="${moneda.codigo}"></td>
+                                <td th:text="${moneda.descripcion}"></td>
+                                <td th:text="${moneda.simbolo}"></td>
+                                <td>
+                                    <button class="btn btn-info"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#nuevaMoneda"
+                                            th:attr="data-id=${moneda.idMoneda}">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </button>
+                                    <a th:href="@{/pagos/eliminar-tipo-moneda/{id}(id=${moneda.idMoneda})}"
+                                       class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <p>Gestión de métodos de pagos.</p>
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoMetodoPago">Nuevo
-                    Método de Pago
-                </button>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="metodoPago : ${metodosPagos}">
-                        <td th:text="${metodoPago.idMetodoPago}"></td>
-                        <td th:text="${metodoPago.nombre}"></td>
-                        <td th:text="${metodoPago.descripcion}"></td>
-                        <td></td>
-                            <button class="btn btn-info"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#nuevoMetodoPago"
-                                    th:attr="data-id=${metodoPago.idMetodoPago}">
-                                <i class="fas fa-edit"></i> Editar
-                            </button>
-                            <a th:href="@{/metodoPago/eliminar/{id}(id=${metodoPago.idMetodoPago})}"
-                               class="btn btn-danger"> <i class="fas fa-trash-alt"></i> Eliminar </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <p>Gestión de tipo de monedas.</p>
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoTipoMoneda">Nuevo
-                    Tipo de Moneda
-                </button>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Código</th>
-                        <th>Descripción</th>
-                        <th>Simbolo</th>
-                        <th>Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="tipoMoneda : ${tiposMonedas}">
-                        <td th:text="${tipoMoneda.idTipoMoneda}"></td>
-                        <td th:text="${tipoMoneda.codigo}"></td>
-                        <td th:text="${tipoMoneda.descripcion}"></td>
-                        <td th:text="${tipoMoneda.simbolo}"></td>
-                        <td></td>
-                            <button class="btn btn-info"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#nuevoTipoMoneda"
-                                    th:attr="data-id=${tipoMoneda.idTipoMoneda}">
-                                <i class="fas fa-edit"></i> Editar
-                            </button>
-                            <a th:href="@{/tipoMoneda/eliminar/{id}(id=${tipoMoneda.idTipoMoneda})}"
-                               class="btn btn-danger"> <i class="fas fa-trash-alt"></i> Eliminar </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <!-- Segunda tabla -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-green text-white d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Gestión de métodos de pago</h5>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#nuevoMetodoPago">Nuevo
+                            método de pago
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="metodo_pago : ${metodos_pago}">
+                                <td th:text="${metodo_pago.idMetodoPago}"></td>
+                                <td th:text="${metodo_pago.nombre}"></td>
+                                <td th:text="${metodo_pago.descripcion}"></td>
+                                <td>
+                                    <button class="btn btn-info"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#nuevoMetodoPago"
+                                            th:attr="data-id=${metodo_pago.idMetodoPago}">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </button>
+                                    <a th:href="@{/pagos/eliminar-metodo-pago/{id}(id=${metodo_pago.idMetodoPago})}"
+                                       class="btn btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-<!-- Modal para Método de Pago -->
-    <div class="modal fade" id="nuevoMetodoPago" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
+    <!-- Modal para tipo de monedas -->
+    <div class="modal fade" id="nuevaMoneda" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form id="metodoPagoForm" th:action="@{/metodoPago/guardar}" method="post">
+                <form id="tipoMonedaForm" th:action="@{/pagos/guardar-tipo-moneda}" method="post">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Método de Pago</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Tipo de Moneda</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
-                        <input type="hidden" id="idMetodoPago" name="idMetodoPago"
-                               th:value="${metodoPago?.idMetodoPago}">
+                        <input type="hidden" id="idMoneda" name="idMoneda"
+                               th:value="${tipo_moneda?.idMoneda}">
 
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control"
-                                   th:value="${metodoPago.nombre}" required>
+                            <label for="codigo" class="form-label">Código</label>
+                            <input type="text" id="codigo" name="codigo" class="form-control"
+                                   th:value="${tipo_moneda.codigo}" required>
                         </div>
 
                         <div class="mb-3">
-                            <label for="descripcion" class="form-label">Descripción</label>
-                            <input type="value" id="descripcion" name="descripcion" class="form-control"
-                                      th:value="${metodoPago.descripcion}" required>
+                            <label for="descripcionTipoMoneda" class="form-label">Descripción</label>
+                            <input type="text" id="descripcionTipoMoneda" name="descripcion" class="form-control"
+                                      th:value="${tipo_moneda.descripcion}" required></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="simbolo" class="form-label">Símbolo</label>
+                            <input type="text" id="simbolo" name="simbolo" class="form-control"
+                                      th:value="${tipo_moneda.simbolo}" required></input>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -113,48 +137,70 @@
             </div>
         </div>
     </div>
-    <!-- Modal para Tipo de Moneda -->
-    <div class="modal fade" id="nuevoTipoMoneda" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-   <div class="modal-dialog modal-dialog-centered" role="document">
-       <div class="modal-content">
-           <form id="tipoMonedaForm" th:action="@{/tipoMoneda/guardar}" method="post">
-               <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLongTitle">Tipo de Moneda</h5>
-                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-               </div>
-               <div class="modal-body">
+    <!-- Modal para metodo de pago -->
+    <div class="modal fade" id="nuevoMetodoPago" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="metodoPagoForm" th:action="@{/pagos/guardar-metodo-pago}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Metodo de Pago</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
 
-                   <input type="hidden" id="idTipoMoneda" name="idTipoMoneda"
-                          th:value="${tipoMoneda?.idTipoMoneda}">
+                        <input type="hidden" id="idMetodoPago" name="idMetodoPago"
+                               th:value="${metodo_pago?.idMetodoPago}">
 
-                   <div class="mb-3">
-                       <label for="codigo" class="form-label">Código</label>
-                       <input type="text" id="codigo" name="codigo" class="form-control"
-                              th:value="${tipoMoneda.codigo}" required>
-                   </div>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control"
+                                   th:value="${metodo_pago.nombre}" required>
+                        </div>
 
-                   <div class="mb-3">
-                       <label for="descripcion" class="form-label">Descripción</label>
-                       <input type="value" id="descripcion" name="descripcion" class="form-control"
-                                 th:value="${tipoMoneda.descripcion}" required>
-                   </div>
-
-                   <div class="mb-3">
-                       <label for="simbolo" class="form-label">Simbolo</label>
-                       <input type="text" id="simbolo" name="simbolo" class="form-control"
-                                 th:value="${tipoMoneda.simbolo}" required>
-                   </div>
-               </div>
-               <div class="modal-footer">
-                   <button type="submit" class="btn btn-success">Guardar</button>
-                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-               </div>
-           </form>
-       </div>
-   </div>
+                        <div class="mb-3">
+                            <label for="descripcionMetodoPago" class="form-label">Descripción</label>
+                            <textarea id="descripcionMetodoPago" name="descripcion" class="form-control" rows="3"
+                                      th:text="${metodo_pago.descripcion}" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
-</div>
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        setupAjaxEdit(
+            ".btn-info",
+            "/pagos/tipo-moneda/{id}",
+            function (data) {
+                document.getElementById("idMoneda").value = data.idMoneda;
+                document.getElementById("codigo").value = data.codigo;
+                document.getElementById("descripcionTipoMoneda").value = data.descripcion;
+                document.getElementById("simbolo").value = data.simbolo;
+                document.querySelector("input[name='idMoneda']").value = data.idMoneda;
+            }
+        );
+
+        setupAjaxEdit(
+            ".btn-info",
+            "/pagos/metodo-pago/{id}",
+            function (data) {
+                document.getElementById("idMetodoPago").value = data.idMetodoPago;
+                document.getElementById("nombre").value = data.nombre;
+                document.getElementById("descripcionMetodoPago").value = data.descripcion;
+                document.querySelector("input[name='idMetodoPago']").value = data.idMetodoPago;
+            }
+        );
+
+    });
+</script>
 </html>

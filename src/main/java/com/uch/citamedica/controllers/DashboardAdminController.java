@@ -28,6 +28,10 @@ public class DashboardAdminController {
     private ConsultorioService consultorioService;
     @Autowired
     private HorarioService horarioService;
+    @Autowired
+    private TipoMonedaService tipoMonedaService;
+    @Autowired
+    private MetodoPagoService metodoPagoService;
 
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
@@ -103,6 +107,10 @@ public class DashboardAdminController {
     @GetMapping("/pagos")
     public String showPagos(Model model) {
         model.addAttribute("activePage", "pagos");
+        model.addAttribute("monedas", tipoMonedaService.listarTipoMonedas());
+        model.addAttribute("metodos_pago", metodoPagoService.listarMetodosPago());
+        model.addAttribute("tipo_moneda", new TipoMoneda());
+        model.addAttribute("metodo_pago", new MetodoPago());
         return "admin/pagos";
     }
 }

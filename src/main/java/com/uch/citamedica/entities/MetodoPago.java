@@ -1,5 +1,6 @@
 package com.uch.citamedica.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -26,6 +28,7 @@ public class MetodoPago {
     @Column(name = "descripcion", length = 255)
     private String descripcion;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "metodoPago")
-    private Set<Pago> pagos;
+    private List<Pago> pagos;
 }
